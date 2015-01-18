@@ -5,7 +5,7 @@
 ###output: html_document
 ---
 
-#_____________________________________________________________________________________
+#__________________________________________
 
 ##Load the data:
 - Data file must be located in the working directory, and named "activity.csv".
@@ -14,7 +14,8 @@
 ```{r}
 activity <- read.csv("activity.csv", header = TRUE, stringsAsFactors=TRUE)
 ```
-#_____________________________________________________________________________________
+#__________________________________________
+
 ##Process/transform the data (if necessary) into a format suitable for your analysis
  - Add a column for POSIX variables. These allow extraction of weekdays and make ploting
  over time domains simpler. 
@@ -25,8 +26,7 @@ activity$POSIXDate <- strptime(activity$date, "%Y-%m-%d")
 activity$Day<-weekdays(activity$POSIXDate)
 ```
 
-#_____________________________________________________________________________________
-
+#__________________________________________
 ##Make a histogram of the total number of steps taken each day:
 
 - Create a vector of the sum of the steps for each day, using the char string for date as a factor in the tapply function.
@@ -37,8 +37,7 @@ Total_Steps_Per_Day <- tapply(activity$steps, factor(activity$date), sum, na.rm 
 hist(Total_Steps_Per_Day, main = "Total Steps Per Day", col = "blue")
 ```
 
-#_____________________________________________________________________________________
-
+#__________________________________________
 ##Calculate and report the mean and median total number of steps taken per day
 
 Use the mean() & median() functions to determine the average and median number
@@ -51,8 +50,7 @@ mean(Total_Steps_Per_Day, na.rm = TRUE)
 median(Total_Steps_Per_Day, na.rm = TRUE)
 ```
 
-#_____________________________________________________________________________________
-
+#__________________________________________
 ##Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 - Use tapply() to calculate the Average Steps Per Interval over all days in the data set. 
@@ -65,8 +63,7 @@ plot(unique(activity$interval), Average_Steps_Per_Interval, type = "l",
 main = "Time Series, Mean Steps Per Interval", xlab = "Intervals")
 ```
 
-#_____________________________________________________________________________________
-
+#__________________________________________
 ## Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 - Using the which.max() function, determine the maximum value retuned.  
@@ -78,7 +75,7 @@ names(which.max(Average_Steps_Per_Interval))
 
 ```
 
-#_____________________________________________________________________________________
+##__________________________________________
 
 ##Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
@@ -90,7 +87,7 @@ names(which.max(Average_Steps_Per_Interval))
 sum(is.na(activity$steps)) ## missing values
 ```
 
-#_____________________________________________________________________________________
+#__________________________________________
 
 ##Fill in the missing values in the data set.
 
@@ -108,7 +105,7 @@ q <- which(is.na(Recon.activity$steps))
 Recon.activity$steps[q] <- Recon.activity$Avg_Steps[q]
 ```
 
-#_______________________________________________________________
+#__________________________________________
 
 ##Make a histogram of the total number of steps taken each day
 
@@ -120,7 +117,7 @@ Recon_Total_Steps_Per_Day <- tapply(Recon.activity$steps, factor(Recon.activity$
 hist(Recon_Total_Steps_Per_Day, main = "Recontructed Data: Missing Data Filled with Interval Means", xlab = "Total Steps Per Day", col = "red")
 ```
 
-#_______________________________________________________________
+#__________________________________________
 
 ##Calculate and report the mean and median total number of steps taken per day.
 
@@ -132,21 +129,21 @@ mean(Recon_Total_Steps_Per_Day)
 median(Recon_Total_Steps_Per_Day)
 ```
 
-#_______________________________________________________________
+#__________________________________________
 
 ##Do these values differ from the estimates from the first part of the assignment?
 
 
 #### ->Yes, significantly.
 
-#_______________________________________________________________
+#__________________________________________
 
 ###What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 
 #### ->The data becomes unskewed, the median and mean become equal and the value increase.This should be expected, as the reconstructed data set consists of averages at each interval. Since the averages were determined from the existing data, they would strengthen the central trend of the data set.  More than 10% of the data set in this case was made of NA values, so a strong effect is to be expected.
 
-#_______________________________________________________________
+#__________________________________________
 
 ##Are there differences in activity patterns between weekdays and weekends?
 
@@ -186,10 +183,7 @@ qplot(Interval,Average_Steps,data = Week_Interval_Data, facets= Day_Type~., geom
 
 
 
-
-#_______________________________________________________________
-#_______________________________________________________________
-
+#__________________________________________
 
 
 ```{r}
